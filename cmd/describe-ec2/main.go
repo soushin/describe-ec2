@@ -68,7 +68,7 @@ func (p *tagCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 
 	reservations, err := getReservations(text, p)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error:%s, text is %v", err.Error(), string(*text))
+		fmt.Fprintf(os.Stderr, "error:%s, search text is '%v'", err.Error(), string(*text))
 		fmt.Println()
 		return subcommands.ExitFailure
 	}
@@ -84,11 +84,11 @@ func (p *tagCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 
 func getText(args []string) (*string, error) {
 	if len(args) == 0 {
-		return nil, errors.New("tag text is required")
+		return nil, errors.New("search text is required")
 	}
 
 	if len(args) > 1 {
-		return nil, errors.New("tag text should be single")
+		return nil, errors.New("search text should be single")
 	}
 
 	return &args[0], nil
@@ -136,4 +136,7 @@ func storePublicDnsNameToFile(flags *tagCmd, i *ec2.Instance) {
 	filePath := fmt.Sprintf("./%s_%s", tagValue, *i.InstanceId)
 	content := []byte(*i.PublicDnsName)
 	ioutil.WriteFile(filePath, content, os.ModePerm)
+
+	fmt.Printf("Completed saving file %s, that content is '%s'", filePath, string(*i.PublicDnsName))
+	fmt.Println()
 }
