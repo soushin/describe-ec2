@@ -1,0 +1,12 @@
+peco-ssh-ec2() {
+  local MAXDEPTH=${1:-1}
+  local BASE_DIR="${2:-`pwd`}"
+
+  local FILENAME=$(find ${BASE_DIR} -maxdepth ${MAXDEPTH} -type f -exec basename {} ';' | peco | head -n 1)
+
+  if [ -n "$FILENAME" ] ; then
+    local HOST=`cat $BASE_DIR/$FILENAME`
+    echo "ssh $HOST"
+    ssh $HOST
+  fi
+}
