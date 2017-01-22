@@ -1,4 +1,4 @@
-peco-ssh-ec2() {
+peco-describe-ec2() {
   local MAXDEPTH=${1:-1}
   local BASE_DIR="${2:-`pwd`}"
 
