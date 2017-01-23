@@ -7,6 +7,8 @@ peco-describe-ec2() {
   if [ -n "$FILENAME" ] ; then
     local HOST=`cat $BASE_DIR/$FILENAME`
     echo "ssh $HOST"
-    ssh $HOST
+    BUFFER="ssh ${HOST}"
+    zle accept-line
   fi
+  zle clear-screen
 }
